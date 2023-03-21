@@ -1,6 +1,3 @@
-/**
- * Sequencing:  this code sets up the initial conditions of the game
- */
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -19,8 +16,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, spacePlane, 200, 0)
+        `, spacePlane1, 200, 0)
 })
+/**
+ * Sequencing:  this code sets up the initial conditions of the game
+ */
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     sprite.destroy(effects.fire, 100)
@@ -32,8 +32,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let bogey: Sprite = null
 let projectile: Sprite = null
-let spacePlane: Sprite = null
-spacePlane = sprites.create(img`
+let spacePlane1: Sprite = null
+spacePlane1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -51,9 +51,29 @@ spacePlane = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-spacePlane.setFlag(SpriteFlag.StayInScreen, true)
+let spacePlane2 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . 6 . . . . . . . 
+    . . . 6 6 . . . 6 6 . . . . . . 
+    . . . 6 6 6 . . 6 6 6 . . . . . 
+    . . . 6 6 6 6 6 6 6 6 . . . . . 
+    . . . 6 6 6 6 6 6 6 6 6 6 6 . . 
+    . . . 6 6 6 6 6 6 6 6 6 6 6 . . 
+    . . . 6 6 6 6 6 6 6 6 . . . . . 
+    . . . 6 6 6 . . 6 6 6 . . . . . 
+    . . . 6 6 . . . 6 6 . . . . . . 
+    . . . . . . . . 6 . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Player)
+spacePlane1.setFlag(SpriteFlag.StayInScreen, true)
+spacePlane2.setFlag(SpriteFlag.StayInScreen, true)
 let lives = 3
-controller.moveSprite(spacePlane, 20, 20)
+controller.player1.moveSprite(spacePlane1)
+controller.player2.moveSprite(spacePlane2)
 game.onUpdateInterval(500, function () {
     bogey = sprites.create(img`
         . . . . . . . . . . . . . . . . 
