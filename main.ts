@@ -1,4 +1,24 @@
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 2 . . . . . . . . . 
+        . . . . . . 2 2 2 2 . . . . . . 
+        . . . . . . 2 2 2 2 2 . . . . . 
+        . . . . . . 2 2 2 2 . . . . . . 
+        . . . . . . 2 . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, spacePlane2, 200, 0)
+})
+controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -32,6 +52,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let bogey: Sprite = null
 let projectile: Sprite = null
+let spacePlane2: Sprite = null
 let spacePlane1: Sprite = null
 spacePlane1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -51,7 +72,7 @@ spacePlane1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-let spacePlane2 = sprites.create(img`
+spacePlane2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
