@@ -38,15 +38,20 @@ controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
         . . . . . . . . . . . . . . . . 
         `, spacePlane1, 200, 0)
 })
-// Sequencing:  this code sets up the initial conditions of the game
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    sprite.destroy(effects.fire, 100)
-    info.changeScoreBy(1)
+info.player1.onLifeZero(function () {
+    sprites.destroy(spacePlane1, effects.disintegrate, 500)
 })
+info.player2.onLifeZero(function () {
+    sprites.destroy(spacePlane2, effects.bubbles, 500)
+})
+// This was the only way I could make the bogies cause each player to lose lives
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
-    lives += -1
+    if (sprite == spacePlane1) {
+        info.player1.changeLifeBy(-1)
+    } else {
+        info.player2.changeLifeBy(-1)
+    }
 })
 let bogey: Sprite = null
 let projectile: Sprite = null
@@ -90,9 +95,10 @@ spacePlane2 = sprites.create(img`
     `, SpriteKind.Player)
 spacePlane1.setFlag(SpriteFlag.StayInScreen, true)
 spacePlane2.setFlag(SpriteFlag.StayInScreen, true)
-let lives = 3
 controller.player1.moveSprite(spacePlane1)
 controller.player2.moveSprite(spacePlane2)
+info.player1.setLife(3)
+info.player2.setLife(3)
 game.onUpdateInterval(500, function () {
     bogey = sprites.create(img`
         . . . . . . . . . . . . . . . . 
