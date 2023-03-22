@@ -1,5 +1,5 @@
 controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSprite(img`
+    projectile2 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -19,7 +19,7 @@ controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
         `, spacePlane2, 200, 0)
 })
 controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSprite(img`
+    projectile1 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -44,6 +44,24 @@ info.player1.onLifeZero(function () {
 info.player2.onLifeZero(function () {
     sprites.destroy(spacePlane2, effects.bubbles, 500)
 })
+// 1)This was the only way I could make the bogies cause each player to lose lives
+// 2) For some reason the players' scores do not always increase with every enemy destroyed
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    if (sprite == projectile1) {
+        info.player1.changeScoreBy(1)
+    } else if (sprite == projectile2) {
+        info.player2.changeScoreBy(1)
+    }
+    if (info.player1.score() > 3) {
+        info.player1.setScore(0)
+        info.player1.changeLifeBy(1)
+    }
+    if (info.player2.score() > 3) {
+        info.player2.setScore(0)
+        info.player2.changeLifeBy(1)
+    }
+})
 // This was the only way I could make the bogies cause each player to lose lives
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -54,7 +72,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
 })
 let bogey: Sprite = null
-let projectile: Sprite = null
+let projectile1: Sprite = null
+let projectile2: Sprite = null
 let spacePlane2: Sprite = null
 let spacePlane1: Sprite = null
 spacePlane1 = sprites.create(img`
