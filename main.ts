@@ -38,9 +38,7 @@ controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
         . . . . . . . . . . . . . . . . 
         `, spacePlane1, 200, 0)
 })
-/**
- * Sequencing:  this code sets up the initial conditions of the game
- */
+// Sequencing:  this code sets up the initial conditions of the game
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     sprite.destroy(effects.fire, 100)
