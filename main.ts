@@ -18,6 +18,15 @@ controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
         . . . . . . . . . . . . . . . . 
         `, spacePlane2, 200, 0)
 })
+// This was the only way I could make the bogies cause each player to lose lives
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite2, otherSprite2) {
+    otherSprite2.destroy()
+    if (sprite2 == spacePlane1) {
+        info.player1.changeLifeBy(-1)
+    } else {
+        info.player2.changeLifeBy(-1)
+    }
+})
 controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
     projectile1 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -46,8 +55,9 @@ info.player2.onLifeZero(function () {
 })
 // 1)This was the only way I could make the bogies cause each player to lose lives
 // 2) For some reason the players' scores do not always increase with every enemy destroyed
+// 3) Added destroy effect for enemies
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    otherSprite.destroy()
+    otherSprite.destroy(effects.spray, 500)
     if (sprite == projectile1) {
         info.player1.changeScoreBy(1)
     } else if (sprite == projectile2) {
@@ -60,15 +70,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     if (info.player2.score() > 3) {
         info.player2.setScore(0)
         info.player2.changeLifeBy(1)
-    }
-})
-// This was the only way I could make the bogies cause each player to lose lives
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    if (sprite == spacePlane1) {
-        info.player1.changeLifeBy(-1)
-    } else {
-        info.player2.changeLifeBy(-1)
     }
 })
 let bogey: Sprite = null
