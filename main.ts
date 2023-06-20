@@ -27,7 +27,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite2, otherS
         info.player2.changeLifeBy(-1)
     }
 })
-controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+info.player1.onLifeZero(function () {
+    sprites.destroy(spacePlane1, effects.disintegrate, 500)
+})
+controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Repeated, function () {
     projectile1 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -46,9 +49,6 @@ controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, spacePlane1, 200, 0)
-})
-info.player1.onLifeZero(function () {
-    sprites.destroy(spacePlane1, effects.disintegrate, 500)
 })
 info.player2.onLifeZero(function () {
     sprites.destroy(spacePlane2, effects.bubbles, 500)
